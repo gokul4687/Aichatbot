@@ -1,13 +1,12 @@
 from dotenv import load_dotenv
 import os
+from flask import Flask, render_template, request, redirect
 from google import genai
 
 load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-from flask import Flask, render_template, request
-from google import genai
 
 app = Flask(__name__)
 
@@ -46,6 +45,13 @@ def home():
                 chat_history.append(f"Bot: {response_text}")
 
     return render_template("index.html", messages = chat_history)
+
+@app.route("/clear")
+def clear():
+
+    chat_history.clear()
+
+    return redirect("/")
 
 if __name__ == "__main__":
     app.run(debug=True)

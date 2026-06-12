@@ -9,11 +9,13 @@
 </head>
 
 <body>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <div class="chat-container">
 
     <div class="chat-header">
         <h1>🤖 Gokul's AI Assistant</h1>
         <p>Online ●</p>
+        <a href="/clear"><button class="clear-btn">Clear Chat</button></a>
     </div>
 
     <div class="chat-box">
@@ -26,7 +28,7 @@
 
                     <div class="message user-message">
 
-                        {{ message }}
+                        {{ message.replace('User: ', '').replace('Bot: ', '') }}
 
                     </div>
 
@@ -34,7 +36,7 @@
 
                     <div class="message bot-message">
 
-                        {{ message }}
+                       {{ message.replace('User: ', '').replace('Bot: ', '') }}
 
                     </div>
 
