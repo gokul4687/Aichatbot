@@ -25,19 +25,27 @@ def home():
         chat_history.append(f"User: {user_message}")
 
         try:
+            
             response = client.models.generate_content(
                 model="gemini-2.5-flash",
                 contents="\n".join(chat_history)
             )
 
+            print(response)
             response_text = response.text
-
+            
             chat_history.append(f"Bot: {response_text}")
+            print(chat_history)
 
         except Exception as e:
-            response_text = f"Error: {e}"
+            if "429" in str(e):
+                response_text = ("I've reached my free usage limit. ""Please try again later.")
+            else:
+                response_text = f"Error: {e}"
 
-    return render_template("index.html", response=response_text)
+                chat_history.append(f"Bot: {response_text}")
+
+    return render_template("index.html", messages = chat_history)
 
 if __name__ == "__main__":
     app.run(debug=True)

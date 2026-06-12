@@ -1,31 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+    
     <title>Gokul's AI Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
-    <h1>🤖 Gokul's AI Chatbot</h1>
+    <div class="chat-container">
 
-    <form method="POST">
+    <div class="chat-header">
+        <h1>🤖 Gokul's AI Assistant</h1>
+        <p>Online ●</p>
+    </div>
+
+    <div class="chat-box">
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                {% if message.startswith("User:") %}
+
+                    <div class="message user-message">
+
+                        {{ message }}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="message bot-message">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+
+    <form method="POST" class="chat-form">
+
         <input
             type="text"
             name="message"
-            placeholder="Ask me anything..."
+            placeholder="Type your message..."
             required>
 
         <button type="submit">
-            Send
+
+            ➤
+
         </button>
+
     </form>
 
-    {% if response %}
-        <hr>
-
-        <h3>Bot:</h3>
-
-        <p>{{ response }}</p>
-    {% endif %}
+</div>
 
 </body>
 </html>
